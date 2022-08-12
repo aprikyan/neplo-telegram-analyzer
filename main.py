@@ -944,8 +944,8 @@ def command_handler(command_id):
                 title='Number of Messages with Top 5 People',
                 bar_kwargs={'alpha': .7},
                 filter_column_colors=True,
-                steps_per_period=50,
-                period_length=200,
+                steps_per_period=100,
+                period_length=50,
                 writer="html"
             )
             components.html(bcr_html.data)
