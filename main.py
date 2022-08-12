@@ -438,10 +438,8 @@ def longest_gap(users=None):
     df.index = df.id
     if users:
         df = df[df.chat_name.isin(users)]
-    st.write(2)
     gaps = df.groupby("chat_name").day_session.apply(lambda x: x.append(pd.Series([TODAY])).diff().max())
     gaps_idx = df.groupby("chat_name").day_session.apply(lambda x: x.append(pd.Series([TODAY])).diff().argmax())
-    st.write(3)
     last_messages = []
     for i in gaps.index:
         msg = df[df.chat_name == i].iloc[gaps_idx[i] - 1]
@@ -701,10 +699,11 @@ def command_handler(command_id):
         st.plotly_chart(fig)
 
     elif command_id == 4:
-        # TODO: print it intelligently
         option_users = st.multiselect("Limit to the following chats (optional):", ["(all)"] + USERS)
-        longest = longest_gap(option_users)
-        # st.dataframe(longest)
+        longest = longest_gap(option_users).iloc[0]
+        st.markdown(f"""The longest gap ever began from `{longest.day_session}` and continued for `{longest.gap.days}` days.
+During this period, there was no message exchanged between you and `{longest.chat_name}`, the last one being "{longest.text}" \
+sent by {longest["from"]} to {longest["to"]}.""")
 
     elif command_id == 5:
         option_word = st.text_input("Word:")
