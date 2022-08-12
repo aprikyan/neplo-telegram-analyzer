@@ -6,3 +6,4 @@ keras~=2.9.0
 tensorflow~=2.9.1
 fire~=0.4.0
 Flask~=2.0.2
+more-itertools
