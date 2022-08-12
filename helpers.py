@@ -16,7 +16,10 @@ def dayify(date, day_start=6):
 
 
 def hide_zeros(series):
-    return series[series != 0]
+    if type(series) == pd.Series:
+        return series[series != 0]
+    else:
+        return pd.DataFrame({col: hide_zeros(series[col]) for col in series}).fillna(0)
 
 
 def complement_index(series, fill_value=None):

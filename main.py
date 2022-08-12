@@ -693,7 +693,7 @@ def command_handler(command_id):
                       user=option_user)
         df = pd.DataFrame([a, b]).fillna(0).T
         df.columns = ["Set 1", "Set 2"]
-        st.dataframe(hide_zeros(df))
+        st.dataframe(hide_zeros(df).astype(int))
         df["date"] = df.index
         fig = px.line(df, x="date", y=["Set 1", "Set 2"])
         st.plotly_chart(fig)
